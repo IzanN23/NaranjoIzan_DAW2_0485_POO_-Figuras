@@ -34,25 +34,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Además de ser positivos, los tres lados deben poder formar un triángulo.
-    if (empty($errores) && $tipo === 'triangulo') {
-        // Convertimos la coma decimal a punto y después a número decimal.
-        $a = (float) str_replace(',', '.', $valores['lado1']);
-        $b = (float) str_replace(',', '.', $valores['lado2']);
-        $c = (float) str_replace(',', '.', $valores['lado3']);
-        if (!esTrianguloValido($a, $b, $c)) {
+    // Si todos los campos son válidos, convertimos los textos a números.
+    // La coma se cambia por punto porque PHP solo entiende 2.5, no 2,5.
+    if (empty($errores)) {
+        $lados = [];
+        foreach ($campos as $campo => $etiqueta) {
+            $lados[$campo] = (float) str_replace(',', '.', $valores[$campo]);
+        }
+
+        // Solo en el triángulo: comprobamos que los tres lados formen un triángulo.
+        if ($tipo === 'triangulo' && !esTrianguloValido($lados['lado1'], $lados['lado2'], $lados['lado3'])) {
             $errores['lado3'] = "Esos lados no forman un triángulo (la suma de dos lados debe ser mayor que el tercero).";
         }
     }
 
+    // Si sigue sin haber errores, guardamos en la sesión y pasamos al resultado.
     if (empty($errores)) {
-        $lados = [];
-        // Guardamos números, no texto, para que las clases puedan calcular con ellos.
-        foreach ($campos as $campo => $etiqueta) {
-            $lados[$campo] = (float) str_replace(',', '.', $valores[$campo]);
-        }
         $_SESSION['lados'] = $lados;
-        // Solo se avanza si todas las validaciones del servidor han pasado.
         header("Location: resultado.php");
         exit;
     }

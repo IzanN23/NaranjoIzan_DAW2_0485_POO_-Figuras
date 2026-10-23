@@ -44,6 +44,9 @@ function validarTriangulo() {
     var b = parseFloat(c2.value.replace(",", "."));
     var c = parseFloat(c3.value.replace(",", "."));
 
+    // Si falta algún número, ya avisa el error propio de ese campo.
+    if (isNaN(a) || isNaN(b) || isNaN(c)) { return true; }
+
     if (a + b > c && a + c > b && b + c > a) {
         return true;
     }
