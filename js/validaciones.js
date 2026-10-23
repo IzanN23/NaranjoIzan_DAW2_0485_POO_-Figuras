@@ -3,7 +3,7 @@
 
 // Actualiza el mensaje junto a un campo y añade/quita el estilo de error.
 function mostrarError(campo, mensaje) {
-    var span = document.getElementById("error-" + campo.id);
+    let span = document.getElementById("error-" + campo.id);
     span.textContent = mensaje;
     if (mensaje !== "") {
         campo.classList.add("input-error");
@@ -15,9 +15,9 @@ function mostrarError(campo, mensaje) {
 // Comprueba que una medida esté informada, tenga formato numérico y sea > 0.
 function validarLado(campo) {
     // Acepta coma decimal y normaliza a punto antes de comprobar el formato.
-    var valor = campo.value.trim().replace(",", ".");
-    var nombre = campo.dataset.nombre;
-    var mensaje = "";
+    let valor = campo.value.trim().replace(",", ".");
+    let nombre = campo.dataset.nombre;
+    let mensaje = "";
 
     if (valor === "") {
         mensaje = nombre + " es obligatorio.";
@@ -33,16 +33,16 @@ function validarLado(campo) {
 
 // Comprobación adicional, exclusiva del triángulo: desigualdad triangular.
 function validarTriangulo() {
-    var c1 = document.getElementById("lado1");
-    var c2 = document.getElementById("lado2");
-    var c3 = document.getElementById("lado3");
+    let c1 = document.getElementById("lado1");
+    let c2 = document.getElementById("lado2");
+    let c3 = document.getElementById("lado3");
     // Si no existe el campo lado3, el formulario no corresponde a un triángulo.
     if (!c3) { return true; }
 
     // Convierte el texto de cada campo para poder comparar las sumas.
-    var a = parseFloat(c1.value.replace(",", "."));
-    var b = parseFloat(c2.value.replace(",", "."));
-    var c = parseFloat(c3.value.replace(",", "."));
+    let a = parseFloat(c1.value.replace(",", "."));
+    let b = parseFloat(c2.value.replace(",", "."));
+    let c = parseFloat(c3.value.replace(",", "."));
 
     // Si falta algún número, ya avisa el error propio de ese campo.
     if (isNaN(a) || isNaN(b) || isNaN(c)) { return true; }
@@ -56,7 +56,7 @@ function validarTriangulo() {
 
 function validarTipo(select) {
     // La opción vacía tiene value="", por eso indica que no se eligió figura.
-    var mensaje = select.value === "" ? "Debes elegir una figura." : "";
+    let mensaje = select.value === "" ? "Debes elegir una figura." : "";
     mostrarError(select, mensaje);
     return mensaje === "";
 }
@@ -64,9 +64,9 @@ function validarTipo(select) {
 document.addEventListener("DOMContentLoaded", function () {
 
     // Ejecuta esta parte solo cuando existe el formulario para elegir figura.
-    var formFigura = document.getElementById("formFigura");
+    let formFigura = document.getElementById("formFigura");
     if (formFigura) {
-        var select = document.getElementById("tipoFigura");
+        let select = document.getElementById("tipoFigura");
         // blur valida al salir del selector; submit vuelve a comprobar al enviar.
         select.addEventListener("blur", function () { validarTipo(select); });
         formFigura.addEventListener("submit", function (e) {
@@ -75,9 +75,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Ejecuta esta parte solo cuando existe el formulario de medidas.
-    var formLados = document.getElementById("formLados");
+    let formLados = document.getElementById("formLados");
     if (formLados) {
-        var campos = formLados.querySelectorAll("input[type=text]");
+        let campos = formLados.querySelectorAll("input[type=text]");
 
         // Valida cada campo cuando el usuario termina de editarlo.
         campos.forEach(function (campo) {
@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         formLados.addEventListener("submit", function (e) {
-            var correcto = true;
+            let correcto = true;
             // Se revisan todos los campos, aunque alguno falle, para mostrar cada error.
             campos.forEach(function (campo) {
                 if (!validarLado(campo)) { correcto = false; }
