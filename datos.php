@@ -46,6 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($tipo === 'triangulo' && !esTrianguloValido($lados['lado1'], $lados['lado2'], $lados['lado3'])) {
             $errores['lado3'] = "Esos lados no forman un triángulo (la suma de dos lados debe ser mayor que el tercero).";
         }
+
+        // La diagonal "menor" debe ser realmente menor que la diagonal mayor.
+        if ($tipo === 'rombo' && $lados['diagonalMenor'] >= $lados['diagonalMayor']) {
+            $errores['diagonalMenor'] = "La diagonal menor debe ser inferior a la diagonal mayor.";
+        }
     }
 
     // Si sigue sin haber errores, guardamos en la sesión y pasamos al resultado.
@@ -84,6 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </main>
     <!-- JavaScript valida al instante; PHP hace la validación definitiva. -->
-    <script src="js/validaciones.js"></script>
+    <!-- <script src="js/validaciones.js"></script> -->
 </body>
 </html>

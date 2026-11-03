@@ -50,17 +50,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <select id="tipoFigura" name="tipoFigura">
                 <option value="">-- Selecciona --</option>
                 <!-- Las opciones se generan desde la lista permitida en PHP. -->
+                <?php $grupoActual = null; ?>
                 <?php foreach ($figuras as $clave => $figura): ?>
+                    <?php
+                    // Solo las dos figuras nuevas se agrupan bajo "Paralelogramos".
+                    $grupo = $figura['grupo'] ?? null;
+                    if ($grupo !== $grupoActual) {
+                        if ($grupoActual !== null) {
+                            echo '</optgroup>';
+                        }
+                        if ($grupo !== null) {
+                            echo '<optgroup label="' . htmlspecialchars($grupo) . '">';
+                        }
+                        $grupoActual = $grupo;
+                    }
+                    ?>
                     <option value="<?= $clave ?>" <?= $seleccionada === $clave ? 'selected' : '' ?>>
                         <?= $figura['nombre'] ?>
                     </option>
                 <?php endforeach; ?>
+                <?php if ($grupoActual !== null): ?></optgroup><?php endif; ?>
             </select>
             <span class="error" id="error-tipoFigura"><?= htmlspecialchars($error) ?></span>
             <button type="submit">Continuar</button>
         </form>
     </main>
     <!-- Esta validación mejora la experiencia, pero PHP vuelve a validar los datos. -->
-    <script src="js/validaciones.js"></script>
+    <!-- <script src="js/validaciones.js"></script> -->
 </body>
 </html>

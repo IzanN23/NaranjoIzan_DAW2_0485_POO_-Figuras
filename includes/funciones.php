@@ -23,6 +23,25 @@ function obtenerFiguras()
             'nombre' => 'Círculo',
             'campos' => ['lado1' => 'Radio'],
         ],
+        // Romboide hereda las tres medidas que usa Paralelogramo.
+        'romboide' => [
+            'nombre' => 'Romboide',
+            'grupo' => 'Paralelogramos',
+            'campos' => [
+                'lado1' => 'Base (lado 1)',
+                'lado2' => 'Lado inclinado (lado 2)',
+                'lado3' => 'Altura (lado 3)',
+            ],
+        ],
+        // El rombo se introduce por sus diagonales; las conserva la sesión con sus nombres.
+        'rombo' => [
+            'nombre' => 'Rombo',
+            'grupo' => 'Paralelogramos',
+            'campos' => [
+                'diagonalMayor' => 'Diagonal mayor',
+                'diagonalMenor' => 'Diagonal menor',
+            ],
+        ],
     ];
 }
 

@@ -6,6 +6,9 @@ require_once 'clases/Triangulo.php';
 require_once 'clases/Rectangulo.php';
 require_once 'clases/Cuadrado.php';
 require_once 'clases/Circulo.php';
+require_once 'clases/Paralelogramo.php';
+require_once 'clases/Romboide.php';
+require_once 'clases/Rombo.php';
 
 $figuras = obtenerFiguras();
 
@@ -36,6 +39,14 @@ try {
             break;
         case 'circulo':
             $figura = new Circulo($lados['lado1']);
+            break;
+        case 'romboide':
+            // Las tres medidas de la sesión pasan al constructor de la clase hija.
+            $figura = new Romboide($lados['lado1'],$lados['lado2'],$lados['lado3']);
+            break;
+        case 'rombo':
+            // El rombo recibe las diagonales y calcula su lado y su altura internamente.
+            $figura = new Rombo($lados['diagonalMayor'], $lados['diagonalMenor']);
             break;
     }
 } catch (Exception $e) {
